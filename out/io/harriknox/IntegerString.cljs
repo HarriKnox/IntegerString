@@ -58,7 +58,6 @@
                (nth large-number-hundred-prefixes hundreds))))
 
 (defn illion-group-name
-      ^:private
       [group-number]
       (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers group-number)
              suffix "on"]

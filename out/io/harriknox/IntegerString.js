@@ -8,10 +8,10 @@ io.harriknox.IntegerString.large_number_unit_prefixes = cljs.core.with_meta(new 
 io.harriknox.IntegerString.large_number_ten_prefixes = cljs.core.with_meta(new cljs.core.PersistentVector(null, 10, 5, cljs.core.PersistentVector.EMPTY_NODE, ["","dec","vigint","trigint","quadragint","quinquagint","sexagint","septuagint","octogint","nonagint"], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"private","private",-558947994),true], null));
 io.harriknox.IntegerString.large_number_hundred_prefixes = cljs.core.with_meta(new cljs.core.PersistentVector(null, 10, 5, cljs.core.PersistentVector.EMPTY_NODE, ["","cent","ducent","trecent","quadringent","quingent","sescent","septingent","octingent","nongent"], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"private","private",-558947994),true], null));
 io.harriknox.IntegerString.split_and_reverse_numbers = (function io$harriknox$IntegerString$split_and_reverse_numbers(number){
-return cljs.core.map.call(null,(function (p1__78_SHARP_){
-return parseInt(p1__78_SHARP_);
-}),cljs.core.reverse.call(null,(function (p1__77_SHARP_){
-return cljs.core.concat.call(null,cljs.core.repeat.call(null,((2) - cljs.core.rem.call(null,(cljs.core.count.call(null,p1__77_SHARP_) - (1)),(3))),"0"),p1__77_SHARP_);
+return cljs.core.map.call(null,(function (p1__29_SHARP_){
+return parseInt(p1__29_SHARP_);
+}),cljs.core.reverse.call(null,(function (p1__28_SHARP_){
+return cljs.core.concat.call(null,cljs.core.repeat.call(null,((2) - cljs.core.rem.call(null,(cljs.core.count.call(null,p1__28_SHARP_) - (1)),(3))),"0"),p1__28_SHARP_);
 }).call(null,[cljs.core.str(number)].join(''))));
 });
 io.harriknox.IntegerString.unit_to_ten_modification = (function io$harriknox$IntegerString$unit_to_ten_modification(units,tens){
@@ -119,29 +119,29 @@ return [cljs.core.str(cljs.core.nth.call(null,io.harriknox.IntegerString.large_n
 }
 });
 io.harriknox.IntegerString.illion_group_name = (function io$harriknox$IntegerString$illion_group_name(group_number){
-var G__84 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,group_number);
-var vec__85 = G__84;
-var ones = cljs.core.nth.call(null,vec__85,(0),null);
-var tens = cljs.core.nth.call(null,vec__85,(1),null);
-var hundreds = cljs.core.nth.call(null,vec__85,(2),null);
-var remaining = cljs.core.nthnext.call(null,vec__85,(3));
+var G__35 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,group_number);
+var vec__36 = G__35;
+var ones = cljs.core.nth.call(null,vec__36,(0),null);
+var tens = cljs.core.nth.call(null,vec__36,(1),null);
+var hundreds = cljs.core.nth.call(null,vec__36,(2),null);
+var remaining = cljs.core.nthnext.call(null,vec__36,(3));
 var suffix = "on";
-var G__84__$1 = G__84;
+var G__35__$1 = G__35;
 var suffix__$1 = suffix;
 while(true){
-var vec__86 = G__84__$1;
-var ones__$1 = cljs.core.nth.call(null,vec__86,(0),null);
-var tens__$1 = cljs.core.nth.call(null,vec__86,(1),null);
-var hundreds__$1 = cljs.core.nth.call(null,vec__86,(2),null);
-var remaining__$1 = cljs.core.nthnext.call(null,vec__86,(3));
+var vec__37 = G__35__$1;
+var ones__$1 = cljs.core.nth.call(null,vec__37,(0),null);
+var tens__$1 = cljs.core.nth.call(null,vec__37,(1),null);
+var hundreds__$1 = cljs.core.nth.call(null,vec__37,(2),null);
+var remaining__$1 = cljs.core.nthnext.call(null,vec__37,(3));
 var suffix__$2 = suffix__$1;
 if((ones__$1 == null)){
 return suffix__$2;
 } else {
-var G__87 = remaining__$1;
-var G__88 = [cljs.core.str(io.harriknox.IntegerString.large_number_group_prefix.call(null,ones__$1,tens__$1,hundreds__$1)),cljs.core.str("illi"),cljs.core.str(suffix__$2)].join('');
-G__84__$1 = G__87;
-suffix__$1 = G__88;
+var G__38 = remaining__$1;
+var G__39 = [cljs.core.str(io.harriknox.IntegerString.large_number_group_prefix.call(null,ones__$1,tens__$1,hundreds__$1)),cljs.core.str("illi"),cljs.core.str(suffix__$2)].join('');
+G__35__$1 = G__38;
+suffix__$1 = G__39;
 continue;
 }
 break;
@@ -153,18 +153,18 @@ return [cljs.core.str((((group_number === (0)))?"":((cljs.core._EQ_.call(null,gr
 });
 io.harriknox.IntegerString.modified_number_name = (function io$harriknox$IntegerString$modified_number_name(number,suffix){
 var number_str = cljs.core.nth.call(null,io.harriknox.IntegerString.number_names,number);
-var pred__92 = cljs.core.re_find;
-var expr__93 = number_str;
-if(cljs.core.truth_(pred__92.call(null,/^$/,expr__93))){
+var pred__43 = cljs.core.re_find;
+var expr__44 = number_str;
+if(cljs.core.truth_(pred__43.call(null,/^$/,expr__44))){
 return "";
 } else {
-if(cljs.core.truth_(pred__92.call(null,/ree$/,expr__93))){
+if(cljs.core.truth_(pred__43.call(null,/ree$/,expr__44))){
 return clojure.string.replace.call(null,number_str,/ree$/,[cljs.core.str("ir"),cljs.core.str(suffix)].join(''));
 } else {
-if(cljs.core.truth_(pred__92.call(null,/ve$/,expr__93))){
+if(cljs.core.truth_(pred__43.call(null,/ve$/,expr__44))){
 return clojure.string.replace.call(null,number_str,/ve$/,[cljs.core.str("f"),cljs.core.str(suffix)].join(''));
 } else {
-if(cljs.core.truth_(pred__92.call(null,/t$/,expr__93))){
+if(cljs.core.truth_(pred__43.call(null,/t$/,expr__44))){
 return clojure.string.replace.call(null,number_str,/t$/,suffix);
 } else {
 return [cljs.core.str(number_str),cljs.core.str(suffix)].join('');
@@ -174,8 +174,8 @@ return [cljs.core.str(number_str),cljs.core.str(suffix)].join('');
 }
 });
 io.harriknox.IntegerString.group_string = (function io$harriknox$IntegerString$group_string(ones,tens,hundreds){
-return cljs.core.concat.call(null,(((hundreds > (0)))?cljs.core._conj.call(null,cljs.core._conj.call(null,cljs.core.List.EMPTY,"hundred"),cljs.core.nth.call(null,io.harriknox.IntegerString.number_names,hundreds)):null),((cljs.core._EQ_.call(null,tens,(1)))?cljs.core._conj.call(null,cljs.core.List.EMPTY,(function (){var G__97 = ones;
-switch (G__97) {
+return cljs.core.concat.call(null,(((hundreds > (0)))?cljs.core._conj.call(null,cljs.core._conj.call(null,cljs.core.List.EMPTY,"hundred"),cljs.core.nth.call(null,io.harriknox.IntegerString.number_names,hundreds)):null),((cljs.core._EQ_.call(null,tens,(1)))?cljs.core._conj.call(null,cljs.core.List.EMPTY,(function (){var G__48 = ones;
+switch (G__48) {
 case (0):
 return "ten";
 
@@ -192,8 +192,8 @@ default:
 return io.harriknox.IntegerString.modified_number_name.call(null,ones,"teen");
 
 }
-})()):cljs.core._conj.call(null,cljs.core.List.EMPTY,[cljs.core.str((function (){var G__98 = tens;
-switch (G__98) {
+})()):cljs.core._conj.call(null,cljs.core.List.EMPTY,[cljs.core.str((function (){var G__49 = tens;
+switch (G__49) {
 case (2):
 return "twenty";
 
@@ -228,34 +228,34 @@ throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_st
 if((cljs.core._EQ_.call(null,number,(0))) || (cljs.core._EQ_.call(null,number,"0"))){
 return "zero";
 } else {
-var G__106 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,number);
-var vec__107 = G__106;
-var ones = cljs.core.nth.call(null,vec__107,(0),null);
-var tens = cljs.core.nth.call(null,vec__107,(1),null);
-var hundreds = cljs.core.nth.call(null,vec__107,(2),null);
-var remaining = cljs.core.nthnext.call(null,vec__107,(3));
+var G__57 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,number);
+var vec__58 = G__57;
+var ones = cljs.core.nth.call(null,vec__58,(0),null);
+var tens = cljs.core.nth.call(null,vec__58,(1),null);
+var hundreds = cljs.core.nth.call(null,vec__58,(2),null);
+var remaining = cljs.core.nthnext.call(null,vec__58,(3));
 var group = (0);
 var number_strings = cljs.core.List.EMPTY;
-var G__106__$1 = G__106;
+var G__57__$1 = G__57;
 var group__$1 = group;
 var number_strings__$1 = number_strings;
 while(true){
-var vec__108 = G__106__$1;
-var ones__$1 = cljs.core.nth.call(null,vec__108,(0),null);
-var tens__$1 = cljs.core.nth.call(null,vec__108,(1),null);
-var hundreds__$1 = cljs.core.nth.call(null,vec__108,(2),null);
-var remaining__$1 = cljs.core.nthnext.call(null,vec__108,(3));
+var vec__59 = G__57__$1;
+var ones__$1 = cljs.core.nth.call(null,vec__59,(0),null);
+var tens__$1 = cljs.core.nth.call(null,vec__59,(1),null);
+var hundreds__$1 = cljs.core.nth.call(null,vec__59,(2),null);
+var remaining__$1 = cljs.core.nthnext.call(null,vec__59,(3));
 var group__$2 = group__$1;
 var number_strings__$2 = number_strings__$1;
 if((ones__$1 == null)){
 return clojure.string.replace.call(null,clojure.string.trim.call(null,clojure.string.replace.call(null,clojure.string.join.call(null," ",number_strings__$2),/\s+/," ")),/,$/,"");
 } else {
-var G__109 = remaining__$1;
-var G__110 = (group__$2 + (1));
-var G__111 = ((cljs.core.every_QMARK_.call(null,cljs.core.zero_QMARK_,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [ones__$1,tens__$1,hundreds__$1], null)))?number_strings__$2:cljs.core.concat.call(null,io.harriknox.IntegerString.group_string.call(null,ones__$1,tens__$1,hundreds__$1),cljs.core.conj.call(null,number_strings__$2,io.harriknox.IntegerString.name_of_group.call(null,group__$2))));
-G__106__$1 = G__109;
-group__$1 = G__110;
-number_strings__$1 = G__111;
+var G__60 = remaining__$1;
+var G__61 = (group__$2 + (1));
+var G__62 = ((cljs.core.every_QMARK_.call(null,cljs.core.zero_QMARK_,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [ones__$1,tens__$1,hundreds__$1], null)))?number_strings__$2:cljs.core.concat.call(null,io.harriknox.IntegerString.group_string.call(null,ones__$1,tens__$1,hundreds__$1),cljs.core.conj.call(null,number_strings__$2,io.harriknox.IntegerString.name_of_group.call(null,group__$2))));
+G__57__$1 = G__60;
+group__$1 = G__61;
+number_strings__$1 = G__62;
 continue;
 }
 break;
