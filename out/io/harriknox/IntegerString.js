@@ -119,6 +119,22 @@ return [cljs.core.str(cljs.core.nth.call(null,io.harriknox.IntegerString.large_n
 }
 });
 io.harriknox.IntegerString.illion_group_name = (function io$harriknox$IntegerString$illion_group_name(group_number){
+if(cljs.core.truth_((function (){var or__2822__auto__ = (cljs.core.integer_QMARK_.call(null,group_number)) && ((group_number > (0)));
+if(or__2822__auto__){
+return or__2822__auto__;
+} else {
+var and__2814__auto__ = typeof group_number === 'string';
+if(and__2814__auto__){
+return cljs.core.re_matches.call(null,/^\d+$/,group_number);
+} else {
+return and__2814__auto__;
+}
+}
+})())){
+} else {
+throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"pos?","pos?",-244377722,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null))),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"string?","string?",-1129175764,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,new cljs.core.Symbol(null,"group-number","group-number",391875954,null))))))].join('')));
+}
+
 var G__35 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,group_number);
 var vec__36 = G__35;
 var ones = cljs.core.nth.call(null,vec__36,(0),null);
@@ -209,7 +225,7 @@ return io.harriknox.IntegerString.modified_number_name.call(null,tens,"ty");
 })()),cljs.core.str(((cljs.core.every_QMARK_.call(null,cljs.core.pos_QMARK_,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [ones,tens], null)))?"-":"")),cljs.core.str(cljs.core.nth.call(null,io.harriknox.IntegerString.number_names,ones))].join(''))));
 });
 io.harriknox.IntegerString.integer_to_string = (function io$harriknox$IntegerString$integer_to_string(number){
-if(cljs.core.truth_((function (){var or__2822__auto__ = cljs.core.integer_QMARK_.call(null,number);
+if(cljs.core.truth_((function (){var or__2822__auto__ = (cljs.core.integer_QMARK_.call(null,number)) && ((number >= (0)));
 if(or__2822__auto__){
 return or__2822__auto__;
 } else {
@@ -222,10 +238,16 @@ return and__2814__auto__;
 }
 })())){
 } else {
-throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"number","number",-1084057331,null)),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"string?","string?",-1129175764,null),new cljs.core.Symbol(null,"number","number",-1084057331,null)),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,new cljs.core.Symbol(null,"number","number",-1084057331,null))))))].join('')));
+throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"number","number",-1084057331,null)),cljs.core.list(new cljs.core.Symbol(null,">=",">=",1016916022,null),new cljs.core.Symbol(null,"number","number",-1084057331,null),(0))),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"string?","string?",-1129175764,null),new cljs.core.Symbol(null,"number","number",-1084057331,null)),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,new cljs.core.Symbol(null,"number","number",-1084057331,null))))))].join('')));
 }
 
-if((cljs.core._EQ_.call(null,number,(0))) || (cljs.core._EQ_.call(null,number,"0"))){
+if(cljs.core.truth_((function (){var or__2822__auto__ = cljs.core._EQ_.call(null,number,(0));
+if(or__2822__auto__){
+return or__2822__auto__;
+} else {
+return cljs.core.re_matches.call(null,/^0+$/,number);
+}
+})())){
 return "zero";
 } else {
 var G__57 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,number);
