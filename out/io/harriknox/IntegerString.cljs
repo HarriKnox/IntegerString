@@ -59,7 +59,7 @@
 
 (defn illion-group-name
       [group-number]
-      {:pre [(or (and (integer? group-number) (pos? group-number)) (and (string? group-number) (re-matches #"^\d+$" group-number)))]}
+      {:pre [(or (and (integer? group-number) (pos? group-number)) (and (string? group-number) (re-matches #"^[1-9]\d*$" group-number)))]}
       (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers group-number)
              suffix "on"]
             (if (nil? ones)

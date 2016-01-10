@@ -125,14 +125,14 @@ return or__2822__auto__;
 } else {
 var and__2814__auto__ = typeof group_number === 'string';
 if(and__2814__auto__){
-return cljs.core.re_matches.call(null,/^\d+$/,group_number);
+return cljs.core.re_matches.call(null,/^[1-9]\d*$/,group_number);
 } else {
 return and__2814__auto__;
 }
 }
 })())){
 } else {
-throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"pos?","pos?",-244377722,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null))),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"string?","string?",-1129175764,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,new cljs.core.Symbol(null,"group-number","group-number",391875954,null))))))].join('')));
+throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"pos?","pos?",-244377722,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null))),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"string?","string?",-1129175764,null),new cljs.core.Symbol(null,"group-number","group-number",391875954,null)),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^[1-9]\d*$/,new cljs.core.Symbol(null,"group-number","group-number",391875954,null))))))].join('')));
 }
 
 var G__35 = io.harriknox.IntegerString.split_and_reverse_numbers.call(null,group_number);
