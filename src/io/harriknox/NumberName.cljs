@@ -1,4 +1,4 @@
-(ns io.harriknox.IntegerString
+(ns io.harriknox.NumberString
     (:require [clojure.string]))
 
 (def number-names ^:private ["" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"])
@@ -105,7 +105,7 @@
                              (if (every? pos? [ones tens]) "-" "")
                              (nth number-names ones))))))
 
-(defn integer-to-string
+(defn number-to-string
       [number]
       {:pre [(or (and (integer? number) (>= number 0)) (re-matches #"^\d+$" (str number)))]}
       (if (or (= number 0) (re-matches #"^0+$" number))
