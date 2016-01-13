@@ -10,10 +10,10 @@
 (defn split-and-reverse-numbers
       ^:private
       [number]
-      (->> (str number)
-           (#(concat (repeat (- 2 (rem (dec (count %)) 3)) \0) %))
-           (reverse)
-           (map #(js/parseInt %))))
+      (let [number-str (clojure.string/replace (str number) #"^0+" "")]
+           (map #(js/parseInt %)
+                (reverse (concat (repeat (- 2 (rem (dec (count number-str)) 3)) \0)
+                                 number-str)))))
 
 (defn unit-to-ten-modification
       ^:private
@@ -59,7 +59,7 @@
 
 (defn illion-group-name
       [group-number]
-      {:pre [(or (and (integer? group-number) (pos? group-number)) (and (string? group-number) (re-matches #"^[1-9]\d*$" group-number)))]}
+      {:pre [(or (and (integer? group-number) (pos? group-number)) (re-matches #"^0*[1-9]\d*$" (str group-number)))]}
       (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers group-number)
              suffix "on"]
             (if (nil? ones)
@@ -107,7 +107,7 @@
 
 (defn integer-to-string
       [number]
-      {:pre [(or (and (integer? number) (>= number 0)) (and (string? number) (re-matches #"^\d+$" number)))]}
+      {:pre [(or (and (integer? number) (>= number 0)) (re-matches #"^\d+$" (str number)))]}
       (if (or (= number 0) (re-matches #"^0+$" number))
           "zero"
           (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers number)
