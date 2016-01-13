@@ -1,4 +1,4 @@
-(ns io.harriknox.NumberString
+(ns io.harriknox.NumberName
     (:require [clojure.string]))
 
 (def number-names ^:private ["" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"])
