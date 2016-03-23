@@ -117,7 +117,7 @@
                     (-> (clojure.string/join " " number-strings)
                         (clojure.string/replace #"\s+" " ")
                         (clojure.string/replace #"^\s+" "")
-                        (clojure.string/replace #"\s*,\s*" ""))
+                        (clojure.string/replace #"\s*,\s*$" ""))
                     (recur remaining
                            (inc group)
                            (if (every? zero? [ones tens hundreds])

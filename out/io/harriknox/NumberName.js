@@ -261,7 +261,7 @@ var remaining__$1 = cljs.core.nthnext.call(null,vec__58,(3));
 var group__$2 = group__$1;
 var number_strings__$2 = number_strings__$1;
 if((ones__$1 == null)){
-return clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.join.call(null," ",number_strings__$2),/\s+/," "),/^\s+/,""),/\s*,\s*/,"");
+return clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.join.call(null," ",number_strings__$2),/\s+/," "),/^\s+/,""),/\s*,\s*$/,"");
 } else {
 var G__59 = remaining__$1;
 var G__60 = (group__$2 + (1));
