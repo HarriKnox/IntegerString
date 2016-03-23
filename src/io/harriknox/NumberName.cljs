@@ -123,7 +123,7 @@
 
 (defn power-of-10-to-string
       [exponent]
-      {:pre [(or (and (integer? exponent) (>= number 0)) (re-matches #"^\d+$" (str number)))]
+      {:pre [(or (and (integer? exponent) (>= exponent 0)) (re-matches #"^\d+$" (str exponent)))]}
       (number-to-string (str \1 (clojure.string/join exponent \0))))
 
 ; googol is ten duotrigintillion
