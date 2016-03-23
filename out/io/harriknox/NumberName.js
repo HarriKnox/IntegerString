@@ -236,7 +236,7 @@ if(cljs.core.truth_((function (){var or__2822__auto__ = cljs.core._EQ_.call(null
 if(or__2822__auto__){
 return or__2822__auto__;
 } else {
-return cljs.core.re_matches.call(null,/^0+$/,number);
+return cljs.core.re_matches.call(null,/^0+$/,[cljs.core.str(number)].join(''));
 }
 })())){
 return "zero";
@@ -261,7 +261,7 @@ var remaining__$1 = cljs.core.nthnext.call(null,vec__58,(3));
 var group__$2 = group__$1;
 var number_strings__$2 = number_strings__$1;
 if((ones__$1 == null)){
-return clojure.string.replace.call(null,clojure.string.trim.call(null,clojure.string.replace.call(null,clojure.string.join.call(null," ",number_strings__$2),/\s+/," ")),/,$/,"");
+return clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.replace.call(null,clojure.string.join.call(null," ",number_strings__$2),/\s+/," "),/^\s+/,""),/\s*,\s*/,"");
 } else {
 var G__59 = remaining__$1;
 var G__60 = (group__$2 + (1));
@@ -287,7 +287,26 @@ return cljs.core.re_matches.call(null,/^\d+$/,[cljs.core.str(exponent)].join('')
 throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null)),cljs.core.list(new cljs.core.Symbol(null,">=",">=",1016916022,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null),(0))),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,cljs.core.list(new cljs.core.Symbol(null,"str","str",-1564826950,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null))))))].join('')));
 }
 
-return io.harriknox.NumberName.number_to_string.call(null,[cljs.core.str("1"),cljs.core.str(clojure.string.join.call(null,cljs.core.repeat.call(null,parseInt(exponent),"0")))].join(''));
+var ex = ((cljs.core.integer_QMARK_.call(null,exponent))?exponent:parseInt([cljs.core.str(exponent)].join('')));
+return clojure.string.replace.call(null,[cljs.core.str((function (){var G__63 = cljs.core.rem.call(null,ex,(3));
+switch (G__63) {
+case (0):
+return "one";
+
+break;
+case (1):
+return "ten";
+
+break;
+case (2):
+return "one hundred";
+
+break;
+default:
+throw (new Error([cljs.core.str("No matching clause: "),cljs.core.str(cljs.core.rem.call(null,ex,(3)))].join('')));
+
+}
+})()),cljs.core.str(" "),cljs.core.str(io.harriknox.NumberName.name_of_group.call(null,cljs.core.quot.call(null,ex,(3))))].join(''),/\s*,\s*$/,"");
 });
 
 //# sourceMappingURL=NumberName.js.map

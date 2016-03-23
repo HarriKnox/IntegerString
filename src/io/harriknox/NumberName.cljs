@@ -108,13 +108,16 @@
 (defn number-to-string
       [number]
       {:pre [(or (and (integer? number) (>= number 0)) (re-matches #"^\d+$" (str number)))]}
-      (if (or (= number 0) (re-matches #"^0+$" number))
+      (if (or (= number 0) (re-matches #"^0+$" (str number)))
           "zero"
           (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers number)
                  group 0
                  number-strings (list)]
                 (if (nil? ones)
-                    (clojure.string/replace (clojure.string/trim (clojure.string/replace (clojure.string/join " " number-strings) #"\s+" " ")) #",$" "")
+                    (-> (clojure.string/join " " number-strings)
+                        (clojure.string/replace #"\s+" " ")
+                        (clojure.string/replace #"^\s+" "")
+                        (clojure.string/replace #"\s*,\s*" ""))
                     (recur remaining
                            (inc group)
                            (if (every? zero? [ones tens hundreds])
@@ -124,7 +127,15 @@
 (defn power-of-10-to-string
       [exponent]
       {:pre [(or (and (integer? exponent) (>= exponent 0)) (re-matches #"^\d+$" (str exponent)))]}
-      (number-to-string (str \1 (clojure.string/join (repeat (js/parseInt exponent) \0)))))
+      (let [ex (if (integer? exponent) exponent (js/parseInt (str exponent)))]
+           (clojure.string/replace (str (case (rem ex 3)
+                                              0 "one"
+                                              1 "ten"
+                                              2 "one hundred")
+                                        " "
+                                        (name-of-group (quot ex 3)))
+                                   #"\s*,\s*$" "")))
+           
 
 ; googol is ten duotrigintillion
 ;

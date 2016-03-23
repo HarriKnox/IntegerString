@@ -10,10 +10,9 @@
 (defn split-and-reverse-numbers
       ^:private
       [number]
-      (->> (str number)
-           (#(concat (repeat (- 2 (rem (dec (count %)) 3)) \0) %))
-           (reverse)
-           (map #(Integer/parseInt %))))
+      (map #(- (int %) 48)
+           (reverse (concat (repeat (- 2 (rem (dec (count (str number))) 3)) \0)
+                            (str number)))))
 
 (defn unit-to-ten-modification
       ^:private
@@ -72,7 +71,7 @@
       ^:private
       [group-number]
       (str (cond (zero? group-number) ""
-                 (= group-number 1) "thousand"
+                 (== group-number 1) "thousand"
                  :else (big-number-group-name (dec group-number)))
            ","))
 
@@ -108,18 +107,33 @@
 (defn number-to-string
       [number]
       {:pre [(or (integer? number) (and (string? number) (re-matches #"^\d+$" number)))]}
-      (if (or (= number 0) (= number "0"))
+      (if (or (= number 0) (re-matches #"^0+$" (str number)))
           "zero"
           (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers number)
                  group 0
                  number-strings (list)]
                 (if (nil? ones)
-                    (clojure.string/replace (clojure.string/trim (clojure.string/replace (clojure.string/join " " number-strings) #"\s+" " ")) #",$" "")
+                    (-> (clojure.string/join " " number-strings)
+                        (clojure.string/replace #"\s+" " ")
+                        (clojure.string/replace #"^\s+" "")
+                        (clojure.string/replace #"\s*,\s*" ""))
                     (recur remaining
                            (inc group)
                            (if (every? zero? [ones tens hundreds])
                                number-strings
                                (concat (group-string ones tens hundreds) (conj number-strings (group-name group)))))))))
+
+(defn power-of-10-to-string
+      [exponent]
+      {:pre [(or (and (integer? exponent) (>= exponent 0)) (re-matches #"^\d+$" (str exponent)))]}
+      (let [ex (if (integer? exponent) exponent (Integer/parseInt (str exponent)))]
+           (clojure.string/replace (str (case (rem ex 3)
+                                              0 "one"
+                                              1 "ten"
+                                              2 "one hundred")
+                                        " "
+                                        (group-name (quot ex 3)))
+                                   #"\s*,\s*$" "")))
 
 ; googol is ten duotrigintillion
 ; googolplex is ten trillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentillitrestrigintatrecentilliduotrigintatrecentillion
