@@ -121,6 +121,10 @@
                                number-strings
                                (concat (group-string ones tens hundreds) (conj number-strings (name-of-group group)))))))))
 
+(defn power-of-10-to-string
+      [exponent]
+      {:pre [(or (and (integer? exponent) (>= number 0)) (re-matches #"^\d+$" (str number)))]
+      (number-to-string (str \1 (clojure.string/join exponent \0))))
 
 ; googol is ten duotrigintillion
 ;
