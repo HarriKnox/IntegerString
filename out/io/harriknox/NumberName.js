@@ -287,7 +287,7 @@ return cljs.core.re_matches.call(null,/^\d+$/,[cljs.core.str(exponent)].join('')
 throw (new Error([cljs.core.str("Assert failed: "),cljs.core.str(cljs.core.pr_str.call(null,cljs.core.list(new cljs.core.Symbol(null,"or","or",1876275696,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",668631710,null),cljs.core.list(new cljs.core.Symbol(null,"integer?","integer?",1303791671,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null)),cljs.core.list(new cljs.core.Symbol(null,">=",">=",1016916022,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null),(0))),cljs.core.list(new cljs.core.Symbol(null,"re-matches","re-matches",-1865705768,null),/^\d+$/,cljs.core.list(new cljs.core.Symbol(null,"str","str",-1564826950,null),new cljs.core.Symbol(null,"exponent","exponent",-570972152,null))))))].join('')));
 }
 
-return io.harriknox.NumberName.number_to_string.call(null,[cljs.core.str("1"),cljs.core.str(clojure.string.join.call(null,exponent,"0"))].join(''));
+return io.harriknox.NumberName.number_to_string.call(null,[cljs.core.str("1"),cljs.core.str(clojure.string.join.call(null,cljs.core.repeat.call(null,exponent,"0")))].join(''));
 });
 
 //# sourceMappingURL=NumberName.js.map
