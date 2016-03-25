@@ -181,8 +181,8 @@
 ;
 ;     The group-prefix-number for 10^(10^R - 1) is 3...32 (3 repeated R - 1 times)
 ;
-;     N is ten times N', so the written form is "ten" then the Latin name for the group-prefix-number for 10^(10^R - 1):
-;         N = 10^(10^R) = 10^(10^R - 1 + 1) = 10^(10^R - 1) * 10^1 = N' * 10
+;     10^N is ten times 10^N', so the written form is "ten" then the Latin name for the group-prefix-number for 10^(10^R - 1):
+;         N = 10^(10^R) = 10^(10^R - 1 + 1) = 10^(10^R - 1) * 10^1 = 10^N' * 10
 ;
 ; A googol is 10^100
 ; A googolplex is 10^(googol) = 10^(10^100), so R = 100
