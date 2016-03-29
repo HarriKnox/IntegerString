@@ -1,11 +1,11 @@
 (ns io.harriknox.NumberName
     (:require [clojure.string]))
 
-(def number-names ^:private ["" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"])
-(def small-number-prefixes ^:private ["n" "m" "b" "tr" "quadr" "quint" "sext" "sept" "oct" "non"])
-(def large-number-unit-prefixes ^:private ["" "un" "duo" "tre" "quattuor" "quinqua" "se" "septe" "octo" "nove"])
-(def large-number-ten-prefixes ^:private ["" "dec" "vigint" "trigint" "quadragint" "quinquagint" "sexagint" "septuagint" "octogint" "nonagint"])
-(def large-number-hundred-prefixes ^:private ["" "cent" "ducent" "trecent" "quadringent" "quingent" "sescent" "septingent" "octingent" "nongent"])
+(def number-names                  ^:private [""  "one"  "two"    "three"   "four"        "five"        "six"      "seven"      "eight"     "nine"    ])
+(def small-number-prefixes         ^:private ["n" "m"    "b"      "tr"      "quadr"       "quint"       "sext"     "sept"       "oct"       "non"     ])
+(def large-number-unit-prefixes    ^:private [""  "un"   "duo"    "tre"     "quattuor"    "quinqua"     "se"       "septe"      "octo"      "nove"    ])
+(def large-number-ten-prefixes     ^:private [""  "dec"  "vigint" "trigint" "quadragint"  "quinquagint" "sexagint" "septuagint" "octogint"  "nonagint"])
+(def large-number-hundred-prefixes ^:private [""  "cent" "ducent" "trecent" "quadringent" "quingent"    "sescent"  "septingent" "octingent" "nongent" ])
 
 (defn split-and-reverse-numbers
       ^:private
@@ -59,7 +59,8 @@
 
 (defn illion-group-name
       [group-number]
-      {:pre [(or (and (integer? group-number) (pos? group-number)) (re-matches #"^0*[1-9]\d*$" (str group-number)))]}
+      {:pre [(or (and (integer? group-number) (pos? group-number))
+                 (re-matches #"^0*[1-9]\d*$" (str group-number)))]}
       (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers group-number)
              suffix "on"]
             (if (nil? ones)
@@ -107,7 +108,8 @@
 
 (defn number-to-string
       [number]
-      {:pre [(or (and (integer? number) (>= number 0)) (re-matches #"^\d+$" (str number)))]}
+      {:pre [(or (and (integer? number) (>= number 0))
+                 (re-matches #"^\d+$" (str number)))]}
       (if (or (= number 0) (re-matches #"^0+$" (str number)))
           "zero"
           (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers number)
@@ -135,7 +137,6 @@
                                         " "
                                         (name-of-group (quot ex 3)))
                                    #"\s*,\s*$" "")))
-           
 
 ; googol is ten duotrigintillion
 ;
