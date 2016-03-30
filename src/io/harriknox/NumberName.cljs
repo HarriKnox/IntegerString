@@ -7,22 +7,35 @@
 (def large-number-ten-prefixes     ^:private [""  "dec"  "vigint" "trigint" "quadragint"  "quinquagint" "sexagint" "septuagint" "octogint"  "nonagint"])
 (def large-number-hundred-prefixes ^:private [""  "cent" "ducent" "trecent" "quadringent" "quingent"    "sescent"  "septingent" "octingent" "nongent" ])
 
+(defn split-numbers
+      ^:private
+      [number]
+      (map #(js/parseInt %) (seq (clojure.string/replace (str number) #"^0+" ""))))
+
+(defn split-and-pad-numbers
+      ^:private
+      [number]
+      (concat (repeat (- 2 (rem (dec (count (str number))) 3)) 0)
+              (split-numbers number)))
+
 (defn split-and-reverse-numbers
       ^:private
       [number]
-      (let [number-str (clojure.string/replace (str number) #"^0+" "")]
-           (map #(js/parseInt %)
-                (reverse (concat (repeat (- 2 (rem (dec (count number-str)) 3)) \0)
-                                 number-str)))))
+      (reverse (split-numbers number)))
+
+(defn split-pad-and-reverse-numbers
+      ^:private
+      [number]
+      (reverse (split-and-pad-numbers number)))
 
 (defn unit-to-ten-modification
       ^:private
       [units tens]
       (let [units-set #{units} tens-set #{tens}]
            (cond (and (some units-set [7 9]) (some tens-set [1 3 4 5 6 7])) "n"
-                 (and (some units-set [7 9]) (some tens-set [2 8])) "m"
-                 (and (= units 6) (= 8 tens)) "x"
-                 (and (some units-set [3 6]) (some tens-set [2 3 4 5 8])) "s"
+                 (and (some units-set [7 9]) (some tens-set [2 8]))         "m"
+                 (and (= units 6)            (= 8 tens))                    "x"
+                 (and (some units-set [3 6]) (some tens-set [2 3 4 5 8]))   "s"
                  :else "")))
 
 (defn unit-to-hundred-modification
@@ -30,9 +43,9 @@
       [units hundreds]
       (let [units-set #{units} hundreds-set #{hundreds}]
            (cond (and (some units-set [7 9]) (some hundreds-set [1 2 3 4 5 6 7])) "n"
-                 (and (some units-set [7 9]) (= 8 hundreds)) "m"
-                 (and (= units 6) (some hundreds-set [1 8])) "x"
-                 (and (some units-set [3 6]) (some hundreds-set [1 3 4 5 8])) "s"
+                 (and (some units-set [7 9]) (= 8 hundreds))                      "m"
+                 (and (= units 6)            (some hundreds-set [1 8]))           "x"
+                 (and (some units-set [3 6]) (some hundreds-set [1 3 4 5 8]))     "s"
                  :else "")))
 
 (defn ten-to-hundred-modification
@@ -61,7 +74,7 @@
       [group-number]
       {:pre [(or (and (integer? group-number) (pos? group-number))
                  (re-matches #"^0*[1-9]\d*$" (str group-number)))]}
-      (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers group-number)
+      (loop [[ones tens hundreds & remaining] (split-pad-and-reverse-numbers group-number)
              suffix "on"]
             (if (nil? ones)
                 suffix
@@ -112,7 +125,7 @@
                  (re-matches #"^\d+$" (str number)))]}
       (if (or (= number 0) (re-matches #"^0+$" (str number)))
           "zero"
-          (loop [[ones tens hundreds & remaining] (split-and-reverse-numbers number)
+          (loop [[ones tens hundreds & remaining] (split-pad-and-reverse-numbers number)
                  group 0
                  number-strings (list)]
                 (if (nil? ones)
@@ -128,7 +141,8 @@
 
 (defn power-of-10-to-string
       [exponent]
-      {:pre [(or (and (integer? exponent) (>= exponent 0)) (re-matches #"^\d+$" (str exponent)))]}
+      {:pre [(or (and (integer? exponent) (>= exponent 0))
+                 (re-matches #"^\d+$" (str exponent)))]}
       (let [ex (if (integer? exponent) exponent (js/parseInt (str exponent)))]
            (clojure.string/replace (str (case (rem ex 3)
                                               0 "one"
