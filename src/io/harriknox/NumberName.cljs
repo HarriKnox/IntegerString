@@ -139,17 +139,42 @@
                                number-strings
                                (concat (group-string ones tens hundreds) (conj number-strings (name-of-group group)))))))))
 
+(defn divide-by-three
+      ^:private
+      [number]
+      {:pre [(or (and (integer? number) (>= number 0))
+                 (re-matches #"^\d+$" (str number)))]}
+      (let [number-str (str number)
+            len (count number-str)]
+           (loop [quotient  ""
+                  remainder ""
+                  counter   0 ]
+                 (let [divisor (js/parseInt (str remainder (nth number-str counter)))]
+                      (if (>= counter len)
+                          (list (clojure.string/replace quotient #"^0+" "") (js/parseInt (str remainder)))
+                          (recur (str quotient (quot divisor 3))
+                                 (rem divisor 3)
+                                 (inc counter)))))))
+
 (defn power-of-10-to-string
       [exponent]
       {:pre [(or (and (integer? exponent) (>= exponent 0))
                  (re-matches #"^\d+$" (str exponent)))]}
-      (let [ex (if (integer? exponent) exponent (js/parseInt (str exponent)))]
-           (clojure.string/replace (str (case (rem ex 3)
-                                              0 "one"
-                                              1 "ten"
-                                              2 "one hundred")
-                                        " "
-                                        (name-of-group (quot ex 3)))
+;      (let [ex (if (integer? exponent) exponent (js/parseInt (str exponent)))]
+;           (clojure.string/replace (str (case (rem ex 3)
+;                                              0 "one"
+;                                              1 "ten"
+;                                              2 "one hundred")
+;                                        " "
+;                                        (name-of-group (quot ex 3)))
+;                                   #"\s*,\s*$" "")))
+      (let [[quotient remainder] (divide-by-three exponent)]
+           (clojure.string/replace (str (case remainder
+                                             0 "one"
+                                             1 "ten"
+                                             2 "one hundred")
+                                       " "
+                                       (name-of-group quotient))
                                    #"\s*,\s*$" "")))
 
 ; googol is ten duotrigintillion
