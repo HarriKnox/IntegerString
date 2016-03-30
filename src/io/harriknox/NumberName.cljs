@@ -28,6 +28,19 @@
       [number]
       (reverse (split-and-pad-numbers number)))
 
+(defn decrement
+      ^:private
+      [number]
+      {:pre [(or (and (integer? number) (pos? number))
+                 (re-matches #"^0*[1-9]\d*$" (str number)))]}
+      (if (re-matches #"^0*10+$" (str number))
+          (clojure.string/replace (clojure.string/replace (str number) #"^0*1" "") #"0" "9")
+          (loop [done-digits (vector)
+                 [first-digit & remaining] (split-and-reverse-numbers number)]
+                (if (zero? first-digit)
+                    (recur (conj done-digits 9) remaining)
+                    (clojure.string/reverse (clojure.string/join (concat done-digits (conj remaining (dec first-digit)))))))))
+
 (defn unit-to-ten-modification
       ^:private
       [units tens]
@@ -87,7 +100,7 @@
       [group-number]
       (str (cond (zero? group-number) ""
                  (= group-number 1) "thousand"
-                 :else (illion-group-name (dec group-number)))
+                 :else (illion-group-name (decrement group-number)))
            ","))
 
 (defn modified-number-name
