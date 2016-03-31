@@ -94,9 +94,10 @@
 (defn name-of-group
       ^:private
       [group-number]
-      (str (cond (zero? group-number) ""
-                 (= group-number 1) "thousand"
-                 :else (illion-group-name (decrement group-number)))
+      (str (condp re-find (str group-number)
+                  #"^0*$" ""
+                  #"^0*1$" "thousand"
+                  (illion-group-name (decrement group-number)))
            ","))
 
 (defn modified-number-name
@@ -104,11 +105,11 @@
       [number suffix]
       (let [number-str (nth number-names number)]
            (condp re-find number-str
-                         #"^$"   ""
-                         #"ree$" (clojure.string/replace number-str #"ree$" (str "ir" suffix))
-                         #"ve$"  (clojure.string/replace number-str #"ve$"  (str "f" suffix))
-                         #"t$"   (clojure.string/replace number-str #"t$"   suffix)
-                         (str number-str suffix))))
+                  #"^$"   ""
+                  #"ree$" (clojure.string/replace number-str #"ree$" (str "ir" suffix))
+                  #"ve$"  (clojure.string/replace number-str #"ve$"  (str "f" suffix))
+                  #"t$"   (clojure.string/replace number-str #"t$"   suffix)
+                  (str number-str suffix))))
 
 (defn group-string
       ^:private
