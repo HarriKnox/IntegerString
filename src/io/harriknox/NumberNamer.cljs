@@ -169,14 +169,6 @@
       [exponent]
       {:pre [(or (and (integer? exponent) (>= exponent 0))
                  (re-matches #"^\d+$" (str exponent)))]}
-;      (let [ex (if (integer? exponent) exponent (js/parseInt (str exponent)))]
-;           (clojure.string/replace (str (case (rem ex 3)
-;                                              0 "one"
-;                                              1 "ten"
-;                                              2 "one hundred")
-;                                        " "
-;                                        (name-of-group (quot ex 3)))
-;                                   #"\s*,\s*$" "")))
       (let [[quotient remainder] (divide-by-three exponent)]
            (clojure.string/replace (str (case remainder
                                              0 "one"
