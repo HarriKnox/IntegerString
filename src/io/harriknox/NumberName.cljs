@@ -33,13 +33,9 @@
       [number]
       {:pre [(or (and (integer? number) (pos? number))
                  (re-matches #"^0*[1-9]\d*$" (str number)))]}
-      (if (re-matches #"^0*10+$" (str number))
-          (clojure.string/replace (clojure.string/replace (str number) #"^0*1" "") #"0" "9")
-          (loop [done-digits (vector)
-                 [first-digit & remaining] (split-and-reverse-numbers number)]
-                (if (zero? first-digit)
-                    (recur (conj done-digits 9) remaining)
-                    (clojure.string/reverse (clojure.string/join (concat done-digits (conj remaining (dec first-digit)))))))))
+      (let [[_number-str before-num decremented-num trailing-zeros] (re-matches #"^(\d*)([1-9])(0*)$" (str number))]
+           (clojure.string/replace (str before-num (dec (js/parseInt decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
+           
 
 (defn unit-to-ten-modification
       ^:private
