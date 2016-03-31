@@ -153,17 +153,19 @@
       [number]
       {:pre [(or (and (integer? number) (>= number 0))
                  (re-matches #"^\d+$" (str number)))]}
-      (let [number-str (str number)
-            len (count number-str)]
-           (loop [quotient  ""
-                  remainder ""
-                  counter   0 ]
-                 (let [divisor (js/parseInt (str remainder (nth number-str counter)))]
-                      (if (>= counter len)
-                          (list (clojure.string/replace quotient #"^0+" "") (js/parseInt (str remainder)))
-                          (recur (str quotient (quot divisor 3))
-                                 (rem divisor 3)
-                                 (inc counter)))))))
+      (if (re-matches #"^0*[0-2]$" (str number))
+          (list "0" (js/parseInt (str number)))
+          (let [number-str (str number)
+                len (count number-str)]
+               (loop [quotient  ""
+                      remainder ""
+                      counter   0 ]
+                     (let [divisor (js/parseInt (str remainder (nth number-str counter)))]
+                          (if (>= counter len)
+                              (list (clojure.string/replace quotient #"^0+" "") (js/parseInt (str remainder)))
+                              (recur (str quotient (quot divisor 3))
+                                     (rem divisor 3)
+                                     (inc counter))))))))
 
 (defn power-of-10-to-string
       [exponent]
