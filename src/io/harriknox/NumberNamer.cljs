@@ -161,7 +161,7 @@
                (loop [quotient  ""
                       remainder ""
                       counter   0 ]
-                     (let [divisor (parse-number remainder (nth number-str counter))]
+                     (let [divisor (parse-number (str remainder (nth number-str counter)))]
                           (if (>= counter len)
                               (list (clojure.string/replace quotient #"^0+" "") (parse-number remainder))
                               (recur (str quotient (quot divisor 3))

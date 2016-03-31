@@ -7,10 +7,15 @@
 (def large-number-ten-prefixes     ^:private [""  "dec"  "vigint" "trigint" "quadragint"  "quinquagint" "sexagint" "septuagint" "octogint"  "nonagint"])
 (def large-number-hundred-prefixes ^:private [""  "cent" "ducent" "trecent" "quadringent" "quingent"    "sescent"  "septingent" "octingent" "nongent" ])
 
+(defn parse-number
+      ^:private
+      [number]
+      (js/parseInt (str number)))
+
 (defn split-numbers
       ^:private
       [number]
-      (map #(js/parseInt %) (seq (clojure.string/replace (str number) #"^0+" ""))))
+      (map parse-number (seq (clojure.string/replace (str number) #"^0+" ""))))
 
 (defn split-and-pad-numbers
       ^:private
@@ -31,10 +36,8 @@
 (defn decrement
       ^:private
       [number]
-      {:pre [(or (and (integer? number) (pos? number))
-                 (re-matches #"^0*[1-9]\d*$" (str number)))]}
       (let [[_number-str before-num decremented-num trailing-zeros] (re-matches #"^(\d*)([1-9])(0*)$" (str number))]
-           (clojure.string/replace (str before-num (dec (js/parseInt decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
+           (clojure.string/replace (str before-num (dec (parse-number decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
            
 
 (defn unit-to-ten-modification
@@ -81,8 +84,7 @@
 
 (defn illion-group-name
       [group-number]
-      {:pre [(or (and (integer? group-number) (pos? group-number))
-                 (re-matches #"^0*[1-9]\d*$" (str group-number)))]}
+      {:pre [(re-matches #"^0*[1-9]\d*$" (str group-number))]}
       (loop [[ones tens hundreds & remaining] (split-pad-and-reverse-numbers group-number)
              suffix "on"]
             (if (nil? ones)
@@ -131,8 +133,7 @@
 
 (defn number-to-string
       [number]
-      {:pre [(or (and (integer? number) (>= number 0))
-                 (re-matches #"^\d+$" (str number)))]}
+      {:pre [(re-matches #"^\d+$" (str number))]}
       (if (or (= number 0) (re-matches #"^0+$" (str number)))
           "zero"
           (loop [[ones tens hundreds & remaining] (split-pad-and-reverse-numbers number)
@@ -152,33 +153,31 @@
 (defn divide-by-three
       ^:private
       [number]
-      {:pre [(or (and (integer? number) (>= number 0))
-                 (re-matches #"^\d+$" (str number)))]}
-      (if (re-matches #"^0*[0-2]$" (str number))
-          (list "0" (js/parseInt (str number)))
-          (let [number-str (str number)
-                len (count number-str)]
+      {:pre [(re-matches #"^\d+$" (str number))]}
+      (let [number-str (str number)
+            len (count number-str)]
+           (if (re-matches #"^0*[0-2]$" number-str)
+               (list "0" (parse-number number-str))
                (loop [quotient  ""
                       remainder ""
                       counter   0 ]
-                     (let [divisor (js/parseInt (str remainder (nth number-str counter)))]
+                     (let [divisor (parse-number (str remainder (nth number-str counter)))]
                           (if (>= counter len)
-                              (list (clojure.string/replace quotient #"^0+" "") (js/parseInt (str remainder)))
+                              (list (clojure.string/replace quotient #"^0+" "") (parse-number remainder))
                               (recur (str quotient (quot divisor 3))
                                      (rem divisor 3)
                                      (inc counter))))))))
 
 (defn power-of-10-to-string
       [exponent]
-      {:pre [(or (and (integer? exponent) (>= exponent 0))
-                 (re-matches #"^\d+$" (str exponent)))]}
+      {:pre [(re-matches #"^\d+$" (str exponent))]}
       (let [[quotient remainder] (divide-by-three exponent)]
            (clojure.string/replace (str (case remainder
                                              0 "one"
                                              1 "ten"
                                              2 "one hundred")
-                                       " "
-                                       (name-of-group quotient))
+                                        " "
+                                        (name-of-group quotient))
                                    #"\s*,\s*$" "")))
 
 ; googol is ten duotrigintillion
