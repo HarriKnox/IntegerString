@@ -12,6 +12,30 @@
       [number]
       (js/parseInt (str number)))
 
+(defn decrement
+      ^:private
+      [number]
+      (let [[_number-str before-num decremented-num trailing-zeros] (re-matches #"^(\d*)([1-9])(0*)$" (str number))]
+           (clojure.string/replace (str before-num (dec (parse-number decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
+
+(defn divide-by-three
+      ^:private
+      [number]
+      {:pre [(re-matches #"^\d+$" (str number))]}
+      (let [number-str (str number)
+            len (count number-str)]
+           (if (re-matches #"^0*[0-2]$" number-str)
+               (list "0" (parse-number number-str))
+               (loop [quotient  ""
+                      remainder ""
+                      counter   0 ]
+                     (let [divisor (parse-number (str remainder (nth number-str counter)))]
+                          (if (>= counter len)
+                              (list (clojure.string/replace quotient #"^0+" "") (parse-number remainder))
+                              (recur (str quotient (quot divisor 3))
+                                     (rem divisor 3)
+                                     (inc counter))))))))
+
 (defn split-numbers
       ^:private
       [number]
@@ -33,12 +57,6 @@
       ^:private
       [number]
       (reverse (split-and-pad-numbers number)))
-
-(defn decrement
-      ^:private
-      [number]
-      (let [[_number-str before-num decremented-num trailing-zeros] (re-matches #"^(\d*)([1-9])(0*)$" (str number))]
-           (clojure.string/replace (str before-num (dec (parse-number decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
 
 (defn unit-to-ten-modification
       ^:private
@@ -149,24 +167,6 @@
                            (if (every? zero? [ones tens hundreds])
                                number-strings
                                (concat (group-string ones tens hundreds) (conj number-strings (name-of-group group)))))))))
-
-(defn divide-by-three
-      ^:private
-      [number]
-      {:pre [(re-matches #"^\d+$" (str number))]}
-      (let [number-str (str number)
-            len (count number-str)]
-           (if (re-matches #"^0*[0-2]$" number-str)
-               (list "0" (parse-number number-str))
-               (loop [quotient  ""
-                      remainder ""
-                      counter   0 ]
-                     (let [divisor (parse-number (str remainder (nth number-str counter)))]
-                          (if (>= counter len)
-                              (list (clojure.string/replace quotient #"^0+" "") (parse-number remainder))
-                              (recur (str quotient (quot divisor 3))
-                                     (rem divisor 3)
-                                     (inc counter))))))))
 
 (defn power-of-10-to-string
       [exponent]
