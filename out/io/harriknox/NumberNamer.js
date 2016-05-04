@@ -14,7 +14,8 @@ io.harriknox.NumberNamer.split_numbers = (function io$harriknox$NumberNamer$spli
 return cljs.core.map.call(null,io.harriknox.NumberNamer.parse_number,cljs.core.seq.call(null,clojure.string.replace.call(null,[cljs.core.str(number)].join(''),/^0+/,"")));
 });
 io.harriknox.NumberNamer.split_and_pad_numbers = (function io$harriknox$NumberNamer$split_and_pad_numbers(number){
-return cljs.core.concat.call(null,cljs.core.repeat.call(null,((2) - cljs.core.rem.call(null,(cljs.core.count.call(null,[cljs.core.str(number)].join('')) - (1)),(3))),(0)),io.harriknox.NumberNamer.split_numbers.call(null,number));
+var number_split = io.harriknox.NumberNamer.split_numbers.call(null,number);
+return cljs.core.concat.call(null,cljs.core.repeat.call(null,((2) - cljs.core.rem.call(null,(cljs.core.count.call(null,number_split) - (1)),(3))),(0)),number_split);
 });
 io.harriknox.NumberNamer.split_and_reverse_numbers = (function io$harriknox$NumberNamer$split_and_reverse_numbers(number){
 return cljs.core.reverse.call(null,io.harriknox.NumberNamer.split_numbers.call(null,number));

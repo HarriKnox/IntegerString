@@ -20,8 +20,9 @@
 (defn split-and-pad-numbers
       ^:private
       [number]
-      (concat (repeat (- 2 (rem (dec (count (str number))) 3)) 0)
-              (split-numbers number)))
+      (let [number-split (split-numbers number)]
+           (concat (repeat (- 2 (rem (dec (count number-split)) 3)) 0)
+                   number-split)))
 
 (defn split-and-reverse-numbers
       ^:private
@@ -38,7 +39,6 @@
       [number]
       (let [[_number-str before-num decremented-num trailing-zeros] (re-matches #"^(\d*)([1-9])(0*)$" (str number))]
            (clojure.string/replace (str before-num (dec (parse-number decremented-num)) (clojure.string/replace trailing-zeros #"0" "9")) #"^0*" "")))
-           
 
 (defn unit-to-ten-modification
       ^:private
